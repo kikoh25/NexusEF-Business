@@ -1911,19 +1911,25 @@ window.fetch = async function(url, options){
   switch(action){
     case 'list':
       const semInv = MOCK_EQUIP.filter(e=>!e.ultimoInventario||(Date.now()-new Date(e.ultimoInventario))>7*86400000);
+      const comResp = MOCK_EQUIP.filter(e=>e.responsavel).length;
+      const semResp = MOCK_EQUIP.filter(e=>!e.responsavel).length;
+      const porAno = MOCK_EQUIP.reduce((a,e)=>{if(e.ano)a[e.ano]=(a[e.ano]||0)+1;return a;},{});
       return mock({ok:true,equipamentos:MOCK_EQUIP,stats:{
         total:MOCK_EQUIP.length,
         comTermo:MOCK_EQUIP.filter(e=>e.temTermo).length,
         semTermo:MOCK_EQUIP.filter(e=>!e.temTermo&&e.responsavel).length,
-        comResponsavel:MOCK_EQUIP.filter(e=>e.responsavel).length,
+        comResponsavel:comResp,
+        comResp:comResp,
+        semResp:semResp,
         criticos:MOCK_EQUIP.filter(e=>e.critico).length,
         semInventario7d:semInv.length,
         porTipo:MOCK_EQUIP.reduce((a,e)=>{a[e.tipo]=(a[e.tipo]||0)+1;return a;},{}),
+        porAno:porAno,
         localizacoes:['São Paulo','Rio de Janeiro','Belo Horizonte','Curitiba','Porto Alegre','Estoque'],
         responsaveis:MOCK_USUARIOS.map(u=>u.nome),
       }});
-    case 'list_celulares':   return mock({ok:true,celulares:MOCK_CEL});
-    case 'list_perifericos': return mock({ok:true,perifericos:MOCK_PER});
+    case 'list_celulares':   return mock({ok:true,items:MOCK_CEL,celulares:MOCK_CEL});
+    case 'list_perifericos': return mock({ok:true,items:MOCK_PER,perifericos:MOCK_PER});
     case 'usuarios':         return mock({ok:true,usuarios:MOCK_USUARIOS});
     case 'get_garantia':     return mock(MOCK_GARANTIAS[id]||{ok:true,buyDate:null,warrantyDate:null,valor:null,fornecedor:null,nf:null});
     case 'salvar_garantia':
