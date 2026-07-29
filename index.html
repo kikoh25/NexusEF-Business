@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Inventário de Equipamentos — CFF Group</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,viewport-fit=cover">
+<title>Inventário de Equipamentos — Nexus EF Business</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -346,7 +346,103 @@ tbody tr:last-child td{border-bottom:none}
 #toast{position:fixed;bottom:20px;right:20px;z-index:999;background:var(--s3);border:1px solid var(--b1);border-radius:10px;padding:12px 18px;font-size:12px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none;align-items:center;gap:8px;max-width:360px}
 
 @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(3,1fr)}.charts-row{grid-template-columns:1fr}}
-@media(max-width:700px){.stats-grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}}
+@media(max-width:700px){
+  /* Layout base */
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr}
+
+  /* Header */
+  .hdr{padding:10px 12px;flex-wrap:wrap;gap:8px}
+  .logo-sub{display:none}
+  .hdr-right{gap:6px}
+  .btn-hdr{padding:6px 8px;font-size:11px}
+  #clock{display:none}
+
+  /* Menu de abas — scroll horizontal */
+  .tabs{padding:0 8px;gap:0;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;padding:10px 12px;font-size:11px;flex-shrink:0}
+  .tab-badge{padding:1px 5px;font-size:9px}
+  .tab-group-hdr{white-space:nowrap;padding:10px 12px;font-size:11px;flex-shrink:0}
+
+  /* Conteúdo principal */
+  .main-content{padding:12px}
+
+  /* Stats */
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat{padding:12px 8px}
+  .stat-val{font-size:22px}
+  .stat-label{font-size:10px}
+
+  /* Tabela — scroll horizontal */
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+  table{min-width:500px}
+  .tbl-hdr{flex-wrap:wrap;gap:8px;padding:10px 14px}
+
+  /* Filtros */
+  .filters{padding:12px}
+  .filters-row{flex-wrap:wrap;gap:8px}
+  .fg{min-width:calc(50% - 4px)}
+  .fi,.form-input{font-size:13px}
+
+  /* Modais — tela cheia no mobile */
+  .overlay{align-items:flex-end;padding:0}
+  .modal{border-radius:20px 20px 0 0;max-height:92vh;width:100%;max-width:100%}
+  .modal-sm{max-width:100%;border-radius:20px 20px 0 0}
+  .modal-md{max-width:100%;border-radius:20px 20px 0 0}
+  .modal-hdr{padding:16px 18px 12px}
+  .modal-body{padding:16px 18px}
+  .modal-foot{padding:12px 18px;flex-wrap:wrap;gap:8px}
+  .modal-foot .btn{flex:1;min-width:100px;justify-content:center}
+
+  /* Modal de detalhes — abas */
+  #md-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #md-tabs button{white-space:nowrap;flex-shrink:0;padding:5px 10px;font-size:10px}
+
+  /* Modal de detalhes — footer de ações */
+  #md-foot{flex-wrap:wrap;gap:6px}
+  #md-foot .btn{font-size:11px;padding:7px 10px}
+
+  /* Cards de colaboradores */
+  #colab-lista-grid{grid-template-columns:1fr!important}
+
+  /* Comparação — select */
+  #comp-select-lista div{padding:10px 16px}
+
+  /* Auditoria */
+  #audit-lista>div,#audit-lista-acessos>div{gap:8px}
+
+  /* QR Code */
+  #modal-qrcode .modal-body{padding:16px}
+
+  /* Guia */
+  #tab-guia .stats-grid{grid-template-columns:repeat(2,1fr)}
+  #tab-guia a[href^="#guia"]{font-size:11px;padding:6px 10px}
+
+  /* Reinventário steps */
+  .ri-step{padding:16px}
+
+  /* Formulário de cadastro */
+  .cad-section{padding:14px}
+
+  /* Empréstimos */
+  .emp-card{padding:14px}
+
+  /* KPI no visão geral */
+  #kpi-wrap{flex-direction:column;gap:8px}
+
+  /* Busca global */
+  #global-search{font-size:13px;width:160px}
+  #global-search:focus{width:200px}
+}
+
+@media(max-width:400px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-val{font-size:18px}
+  .tab{padding:8px 10px;font-size:10px}
+  .modal-title{font-size:13px}
+}
 </style>
 <script>var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();</script>
 </head>
@@ -357,7 +453,7 @@ tbody tr:last-child td{border-bottom:none}
     <div class="logo-icon">💻</div>
     <div>
       <div class="logo-text">Inventário de Equipamentos</div>
-      <div class="logo-sub">CFF Group · NowPro Technology <span style="color:var(--b2);margin-left:6px">v12.8</span><span style="background:var(--amber);color:#000;font-size:9px;font-weight:800;padding:2px 8px;border-radius:4px;margin-left:6px;letter-spacing:.05em">DEMO</span></div>
+      <div class="logo-sub">Nexus EF Business <span style="color:var(--b2);margin-left:6px">v12.8</span><span style="background:var(--amber);color:#000;font-size:9px;font-weight:800;padding:2px 8px;border-radius:4px;margin-left:6px;letter-spacing:.05em">DEMO</span> <span style="font-size:10px;color:var(--t2);margin-left:4px">· Desenvolvido por Nexus EF Business</span></div>
     </div>
   </div>
   <div class="hdr-right">
@@ -424,6 +520,7 @@ tbody tr:last-child td{border-bottom:none}
     ★ Favoritos <span class="tab-badge" id="badge-favoritos" style="background:var(--amber2);color:var(--amber);border:1px solid var(--amber)">0</span>
   </div>
   <div class="tab" onclick="goTab('auditoria',this)">📋 Auditoria</div>
+  <div class="tab" onclick="goTab('guia',this)" style="color:var(--green);font-weight:700">📖 Guia</div>
   <div class="tab" onclick="goTab('cadastrar',this)" style="margin-left:auto;background:var(--blue);color:#fff;border-radius:8px;margin-right:4px;padding:8px 16px">➕ Cadastrar</div>
 </div>
 
@@ -819,6 +916,393 @@ tbody tr:last-child td{border-bottom:none}
     <input class="form-input" id="colab-filtro" placeholder="Filtrar colaborador..." oninput="renderColaboradores()" style="width:220px">
   </div>
   <div id="colab-lista-grid"></div>
+</div>
+
+<!-- ── GUIA DE USO ───────────────────────────────────────────────────────────── -->
+<div class="tab-content" id="tab-guia">
+<div style="max-width:820px;margin:0 auto;padding:8px 0 40px">
+
+  <!-- Hero -->
+  <div style="text-align:center;padding:40px 20px 32px;background:linear-gradient(135deg,var(--blue2) 0%,var(--s2) 100%);border:1px solid var(--blue);border-radius:20px;margin-bottom:32px">
+    <div style="font-size:40px;margin-bottom:12px">🖥️</div>
+    <div style="font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:8px">Plataforma de Gestão de TI</div>
+    <div style="font-size:14px;color:var(--t1);max-width:480px;margin:0 auto;line-height:1.6">Guia completo de uso — aprenda a utilizar todos os módulos da plataforma passo a passo</div>
+    <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <span style="background:var(--blue);color:#fff;border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700">Desenvolvido por Nexus EF Business</span>
+    </div>
+  </div>
+
+  <!-- Índice rápido -->
+  <div style="background:var(--s2);border:1px solid var(--b0);border-radius:16px;padding:20px 24px;margin-bottom:32px">
+    <div style="font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">📋 Índice — Clique para ir direto ao módulo</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
+      <a href="#guia-dashboard" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">🏠 Dashboard</a>
+      <a href="#guia-equipamentos" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">💻 Equipamentos</a>
+      <a href="#guia-colaboradores" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">👥 Colaboradores</a>
+      <a href="#guia-reinventario" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">🔄 Reinventário</a>
+      <a href="#guia-emprestimos" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">📤 Empréstimos</a>
+      <a href="#guia-garantia" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">🛡️ Garantia</a>
+      <a href="#guia-celulares" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">📱 Celulares</a>
+      <a href="#guia-qrcode" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">🏷️ QR Code</a>
+      <a href="#guia-auditoria" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">📋 Auditoria</a>
+      <a href="#guia-cadastro" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">➕ Cadastrar</a>
+      <a href="#guia-comparacao" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">⚖️ Comparação</a>
+      <a href="#guia-favoritos" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s3);border:1px solid var(--b0);border-radius:10px;text-decoration:none;color:var(--tx);font-size:12px;font-weight:600;transition:border-color .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--b0)'">★ Favoritos</a>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Dashboard -->
+  <div id="guia-dashboard" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--blue2);border:1px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🏠</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Visão Geral (Dashboard)</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Tela inicial — panorama completo do parque de TI</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">A tela inicial mostra em tempo real o estado de toda a infraestrutura de TI. É o ponto de partida para identificar problemas e acompanhar indicadores.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Cards de KPIs</div><div style="font-size:12px;color:var(--t2)">Os 6 cards no topo mostram: total de equipamentos, quantos têm termo assinado, quantos estão sem termo, quantos têm responsável, críticos e percentual de conformidade. Clique em qualquer card para ver detalhes.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Gráfico de Conformidade</div><div style="font-size:12px;color:var(--t2)">O donut verde/vermelho mostra o percentual de equipamentos com termo assinado. Meta ideal: acima de 80%.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">3</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Gráfico por Ano de Fabricação</div><div style="font-size:12px;color:var(--t2)">Barras coloridas mostram quantos equipamentos existem por ano. Vermelho = mais de 7 anos (candidatos a substituição). Clique em qualquer barra para filtrar.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">!</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--red)">Banner de Alertas</div><div style="font-size:12px;color:var(--t2)">Quando há equipamentos críticos ou empréstimos vencidos, banners coloridos aparecem no topo da visão geral. Clique no banner para ir direto ao problema.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Equipamentos -->
+  <div id="guia-equipamentos" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--s3);border:1px solid var(--b0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">💻</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Equipamentos</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Computadores, Celulares e Periféricos</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">No menu <strong>Ativos</strong> você acessa as três listagens. Cada uma tem filtros específicos e ao clicar em qualquer equipamento abre um painel detalhado.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Filtros e Busca</div><div style="font-size:12px;color:var(--t2)">Use os filtros no topo da lista para encontrar equipamentos por tipo, localização, responsável, status do termo ou ano de fabricação. A busca livre localiza por nome, serial ou responsável.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Modal de Detalhes — 4 abas</div><div style="font-size:12px;color:var(--t2)">Clique em qualquer equipamento para abrir o painel. São 4 abas: <strong>Info</strong> (dados técnicos e responsável), <strong>Histórico</strong> (linha do tempo de eventos), <strong>Garantia</strong> (compra e vencimento) e <strong>Acessórios</strong> (itens vinculados).</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">3</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Ações rápidas no rodapé do modal</div><div style="font-size:12px;color:var(--t2)">Cada modal tem botões de ação: ★ Favoritar, ⚖️ Comparar, 🏷️ Etiqueta QR, 📄 Ver Termo, 📤 Emprestar, 🔄 Reinventariar e ✏️ Editar. Clique no card do responsável para ver todos os equipamentos da pessoa.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">✓</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--green)">Editar Equipamento</div><div style="font-size:12px;color:var(--t2)">Clique em ✏️ Editar para alterar qualquer campo: nome, serial, patrimônio, localização, status e responsável. As alterações são salvas imediatamente.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Colaboradores -->
+  <div id="guia-colaboradores" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--s3);border:1px solid var(--b0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">👥</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Colaboradores</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Visão completa por pessoa</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">A aba Colaboradores lista todas as pessoas que têm equipamentos vinculados — computadores, celulares e periféricos juntos em um único card.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Cards de colaboradores</div><div style="font-size:12px;color:var(--t2)">Cada card mostra o nome, total de equipamentos e um badge verde (tudo OK) ou vermelho (pendências de termo). Filtre pelo campo de busca no topo.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Modal do colaborador</div><div style="font-size:12px;color:var(--t2)">Clique em qualquer card para ver todos os equipamentos da pessoa em um único painel: Mac, iPhone, periféricos. Clique em qualquer item para abrir os detalhes do equipamento.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">3</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Acesso rápido pelo equipamento</div><div style="font-size:12px;color:var(--t2)">No modal de qualquer equipamento, o card do responsável é clicável e mostra "👆 Ver todos os equipamentos desta pessoa". Clique para abrir o modal do colaborador.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Reinventário -->
+  <div id="guia-reinventario" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--amber2);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🔄</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Reinventário</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Transferência formal de equipamento entre colaboradores</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">O reinventário é o processo oficial de passar um equipamento de um colaborador para outro. O sistema executa tudo automaticamente em 5 etapas.</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--s3);border-radius:10px;border-left:3px solid var(--blue)">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:12px;font-weight:700">Selecionar Colaborador</div><div style="font-size:11px;color:var(--t2);margin-top:2px">Digite o nome do colaborador que vai receber o equipamento. Se não existir, clique em "+ Novo colaborador" para cadastrar na hora.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--s3);border-radius:10px;border-left:3px solid var(--blue)">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:12px;font-weight:700">Equipamento Antigo</div><div style="font-size:11px;color:var(--t2);margin-top:2px">O sistema mostra automaticamente o equipamento atual do colaborador (se houver). Confirme que foi devolvido e marque os itens do checklist de devolução.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--s3);border-radius:10px;border-left:3px solid var(--blue)">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">3</div>
+          <div><div style="font-size:12px;font-weight:700">Equipamento Novo</div><div style="font-size:11px;color:var(--t2);margin-top:2px">Digite o número de série do novo equipamento. O sistema localiza e confirma os dados antes de prosseguir.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--s3);border-radius:10px;border-left:3px solid var(--blue)">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">4</div>
+          <div><div style="font-size:12px;font-weight:700">Termo de Responsabilidade</div><div style="font-size:11px;color:var(--t2);margin-top:2px">Preencha os dados do termo: nome, gestor e kit de acessórios. O colaborador assina digitalmente. Se precisar assinar depois, use "Assinar depois".</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--green2);border-radius:10px;border-left:3px solid var(--green)">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:#000;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">5</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--green)">Confirmação e Execução</div><div style="font-size:11px;color:var(--t2);margin-top:2px">Revise o resumo e confirme. O sistema executa tudo automaticamente: move o antigo para estoque, vincula o novo, gera o PDF do termo e registra na auditoria.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Empréstimos -->
+  <div id="guia-emprestimos" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--amber2);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📤</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Controle de Empréstimos</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Equipamentos emprestados temporariamente</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">Registre quando um equipamento for emprestado temporariamente — para colaboradores internos ou pessoas externas — com prazo definido de devolução.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--amber);color:#000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Registrar Empréstimo</div><div style="font-size:12px;color:var(--t2)">No menu Pendências → Empréstimos, clique em "+ Registrar Empréstimo". Selecione o equipamento, informe o responsável (pode ser externo), defina a data de devolução e o motivo.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--amber);color:#000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Alertas automáticos</div><div style="font-size:12px;color:var(--t2)">Quando o prazo estiver vencendo (3 dias) ou já vencido, um banner de alerta aparece na Visão Geral. Os cards ficam amarelos ou vermelhos conforme a urgência.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">✓</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--green)">Registrar Devolução</div><div style="font-size:12px;color:var(--t2)">Clique em "✅ Devolver" no card do empréstimo, adicione uma observação sobre o estado do equipamento e confirme. O registro fica no histórico.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">💡</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Emprestar pelo modal</div><div style="font-size:12px;color:var(--t2)">Também é possível emprestar direto pelo modal do equipamento. Clique em "📤 Emprestar" no rodapé — o equipamento já vem pré-selecionado.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Garantia -->
+  <div id="guia-garantia" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--green2);border:1px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🛡️</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Garantia e Aquisição</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Controle financeiro e de vida útil dos equipamentos</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">A aba Garantia de cada equipamento centraliza todas as informações de compra e suporte técnico.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Cadastrar dados de garantia</div><div style="font-size:12px;color:var(--t2)">Abra o modal do equipamento → aba Garantia → clique em "✏️ Editar garantia". Preencha: data de compra, garantia até, valor pago, fornecedor e número da nota fiscal.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Status automático</div><div style="font-size:12px;color:var(--t2)">O sistema calcula automaticamente se a garantia está vigente (verde), vencendo em breve (amarelo) ou já vencida (vermelho), com contador de dias.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">!</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--red)">Avaliação de vida útil</div><div style="font-size:12px;color:var(--t2)">Equipamentos fabricados há mais de 7 anos são marcados como candidatos prioritários para substituição. Entre 4-7 anos, recomenda-se avaliar renovação.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Celulares e Periféricos -->
+  <div id="guia-celulares" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--s3);border:1px solid var(--b0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📱</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Celulares e Periféricos</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Chip/Linha e acessórios vinculados</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">📶</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Cadastrar Chip/Linha</div><div style="font-size:12px;color:var(--t2)">Na listagem de celulares, clique no botão "📶 Chip" de qualquer aparelho para cadastrar: número, operadora, plano, custo mensal, ICCID e vencimento. Os dados aparecem diretamente na aba Info do celular.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">📦</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Acessórios vinculados</div><div style="font-size:12px;color:var(--t2)">Na aba Acessórios de qualquer equipamento, clique em "+ Adicionar" para vincular monitores, docks, carregadores, mouses, teclados, headsets e outros itens. O histórico fica salvo permanentemente.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: QR Code -->
+  <div id="guia-qrcode" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--s3);border:1px solid var(--b0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🏷️</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">QR Code e Etiquetas</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Identificação física dos equipamentos</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Gerar etiqueta</div><div style="font-size:12px;color:var(--t2)">No modal de qualquer equipamento, clique em 🏷️ Etiqueta. Um QR Code é gerado instantaneamente com os dados do equipamento.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Imprimir etiqueta térmica</div><div style="font-size:12px;color:var(--t2)">Clique em "🖨️ Imprimir Etiqueta" para imprimir no formato 90,3×29mm (padrão de impressoras térmicas). A etiqueta traz: logo, QR Code, nome do equipamento, serial, patrimônio e responsável — tudo em preto para impressão térmica.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">📷</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--green)">Escanear com celular</div><div style="font-size:12px;color:var(--t2)">Ao escanear o QR Code com a câmera do celular, abre uma página com todas as informações do equipamento e um formulário para reportar problemas ao TI — sem precisar de login.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Auditoria -->
+  <div id="guia-auditoria" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--s3);border:1px solid var(--b0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📋</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Auditoria</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Registro imutável de todas as ações</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">Toda ação realizada no sistema é registrada permanentemente. Nenhum registro pode ser apagado, garantindo rastreabilidade total.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">✏</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Aba Modificações</div><div style="font-size:12px;color:var(--t2)">Registra todas as ações: cadastros, edições, reinventários, termos gerados, empréstimos, DMs enviadas e problemas reportados. Filtre por tipo ou busque por texto.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">👁</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Aba Acessos</div><div style="font-size:12px;color:var(--t2)">Registra quem acessou o dashboard, quando e de qual dispositivo/navegador. Útil para auditoria de segurança.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">⬇</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--green)">Exportar CSV</div><div style="font-size:12px;color:var(--t2)">Clique em "⬇ Exportar CSV" para baixar todos os registros em formato Excel para relatórios ou compliance.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Cadastro -->
+  <div id="guia-cadastro" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--blue2);border:1px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">➕</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Cadastrar Ativos</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Adicionando novos equipamentos ao parque</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="font-size:12px;color:var(--t1);line-height:1.8;margin-bottom:16px">Clique em "➕ Cadastrar" no menu para adicionar novos equipamentos. Três tipos disponíveis: Computador, Celular e Periférico.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Escolha o tipo</div><div style="font-size:12px;color:var(--t2)">Selecione Computador (Mac, iMac etc.), Celular (iPhone, Android) ou Periférico (mouse, teclado, headset, monitor). Cada tipo tem campos específicos.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Preencha os dados</div><div style="font-size:12px;color:var(--t2)">Nome, serial e tipo são obrigatórios. O responsável pode ser buscado pelo nome — se não existir, clique em "+ Novo colaborador" para cadastrá-lo na hora.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">✓</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--green)">Salvar</div><div style="font-size:12px;color:var(--t2)">Clique em "💾 Cadastrar Equipamento". O ativo é criado imediatamente e aparece nas listagens. O histórico de cadastros da sessão fica visível na parte inferior da tela.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Comparação -->
+  <div id="guia-comparacao" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--s3);border:1px solid var(--b0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚖️</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Comparação de Equipamentos</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Compare dois equipamentos lado a lado</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Iniciar comparação</div><div style="font-size:12px;color:var(--t2)">Abra o modal de qualquer equipamento e clique em ⚖️ Comparar. O equipamento atual é automaticamente selecionado como o primeiro.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Selecionar o segundo</div><div style="font-size:12px;color:var(--t2)">Um modal abre com a lista de todos os outros equipamentos. Use a busca para filtrar. Clique no equipamento desejado.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">✓</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;color:var(--green)">Resultado</div><div style="font-size:12px;color:var(--t2)">Uma tabela comparativa aparece com todos os campos lado a lado. Campos destacados em amarelo indicam diferença entre os dois equipamentos.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: Favoritos -->
+  <div id="guia-favoritos" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--amber2);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">★</div>
+      <div>
+        <div style="font-size:18px;font-weight:800">Favoritos e Dashboard Executivo</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px">Acesso rápido e visão gerencial</div>
+      </div>
+    </div>
+    <div style="background:var(--s2);border:1px solid var(--b0);border-radius:14px;padding:20px 24px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--amber);color:#000;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">★</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Favoritar equipamentos</div><div style="font-size:12px;color:var(--t2)">No modal de qualquer equipamento, clique em ☆. A estrela fica dourada e o equipamento aparece na aba Favoritos para acesso rápido. Funciona para computadores, celulares e periféricos.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">📊</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:2px">Dashboard Executivo</div><div style="font-size:12px;color:var(--t2)">Clique em 📊 no cabeçalho para abrir o painel executivo com KPIs resumidos: total de ativos, conformidade, distribuição por tipo e alertas críticos. Ideal para apresentações à diretoria. Clique em 🖨️ Imprimir para salvar.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé do guia -->
+  <div style="text-align:center;padding:24px;background:var(--s2);border:1px solid var(--b0);border-radius:16px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:6px">Dúvidas ou sugestões?</div>
+    <div style="font-size:12px;color:var(--t2)">Esta é uma versão de demonstração da Plataforma de Gestão de TI.</div>
+    <div style="font-size:12px;color:var(--t2);margin-top:4px">Desenvolvido por <strong style="color:var(--blue)">Nexus EF Business</strong></div>
+  </div>
+
+</div>
 </div>
 
 <!-- ── FAVORITOS ─────────────────────────────────────────────────────────────── -->
@@ -1263,7 +1747,7 @@ tbody tr:last-child td{border-bottom:none}
     <div class="drawer-section">ASSINATURA DIGITAL</div>
     <div style="background:var(--s3);border:1px solid var(--b0);border-radius:10px;padding:14px;margin-bottom:6px">
       <div style="font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:12px">
-        🔒 Ao prosseguir, o colaborador declara ter lido e concordado com o Termo de Responsabilidade de Equipamentos de TI da CFF Group.
+        🔒 Ao prosseguir, o colaborador declara ter lido e concordado com o Termo de Responsabilidade de Equipamentos de TI da Nexus EF Business.
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
         <input type="checkbox" id="drw-confirma" style="width:16px;height:16px;accent-color:var(--blue)">
@@ -1415,7 +1899,7 @@ tbody tr:last-child td{border-bottom:none}
         <div style="background:var(--s3);border:1px solid var(--b0);border-radius:10px;padding:12px 14px;margin-top:14px">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
             <input type="checkbox" id="ri-confirma" style="width:16px;height:16px;accent-color:var(--blue)">
-            <label for="ri-confirma" style="font-size:12px;cursor:pointer">Li e concordo com os termos do Termo de Responsabilidade de Equipamentos de TI da CFF Group</label>
+            <label for="ri-confirma" style="font-size:12px;cursor:pointer">Li e concordo com os termos do Termo de Responsabilidade de Equipamentos de TI da Nexus EF Business</label>
           </div>
           <div class="form-group">
             <div class="form-label">Nome para assinatura digital <span>*</span></div>
@@ -1930,7 +2414,7 @@ window.fetch = async function(url, options){
       }});
     case 'list_celulares':   return mock({ok:true,items:MOCK_CEL,celulares:MOCK_CEL});
     case 'list_perifericos': return mock({ok:true,items:MOCK_PER,perifericos:MOCK_PER});
-    case 'usuarios':         return mock({ok:true,usuarios:MOCK_USUARIOS});
+    case 'usuarios':         return mock(MOCK_USUARIOS);
     case 'get_garantia':     return mock(MOCK_GARANTIAS[id]||{ok:true,buyDate:null,warrantyDate:null,valor:null,fornecedor:null,nf:null});
     case 'salvar_garantia':
       const garBody = options?.body ? JSON.parse(options.body) : {};
@@ -2000,10 +2484,9 @@ window.fetch = async function(url, options){
     case 'get_localizacao':  return mock({ok:true,historico:MOCK_LOC_HIST[id]||[]});
     case 'save_localizacao': return mock({ok:true});
     case 'termo_url':
-      const termoEquipId = parseInt(params.get('id')||params.get('doc_id')||'0');
-      // Busca o equipamento pelo termoId
-      const equipPorTermo = [...MOCK_EQUIP,...MOCK_CEL,...MOCK_PER].find(e=>e.termoId===termoEquipId);
-      if(equipPorTermo) setTimeout(()=>abrirTermoDemo(equipPorTermo.id,equipPorTermo), 100);
+      const termoId2 = parseInt(params.get('id')||params.get('doc_id')||'0');
+      const equipPorTermo2 = [...MOCK_EQUIP,...MOCK_CEL,...MOCK_PER].find(e=>e.termoId===termoId2||e.id===termoId2);
+      if(equipPorTermo2) setTimeout(()=>abrirTermoDemo(equipPorTermo2.id,equipPorTermo2), 100);
       return mock({ok:true,url:'#demo'});
     case 'criar_usuario':
       const body = options?.body ? JSON.parse(options.body) : {};
@@ -2090,6 +2573,7 @@ function goTab(id, el){
     }
   }
   if(id==='favoritos')       { renderFavoritos(); }
+  if(id==='guia')            { /* conteúdo estático */ }
   if(id==='celulares')       { if(allCelulares.length===0) loadCelulares(); else aplicarFiltrosCel(); }
   if(id==='perifericos')     { if(allPerifericos.length===0) loadPerifericos(); else aplicarFiltrosPer(); }
   if(id==='criticos')        { if(allData.length>0) renderCriticos(); }
@@ -2167,7 +2651,8 @@ async function loadData(){
       fetch(API+'?action=usuarios&t='+Date.now())
     ]);
     const data = await dataRes.json();
-    usuarios = await usersRes.json();
+    const usersData = await usersRes.json();
+    usuarios = Array.isArray(usersData) ? usersData : (usersData.usuarios||usersData||[]);
     allData = data.equipamentos||[];
     window._statsCache = data.stats;
     renderStats(data.stats);
@@ -2495,11 +2980,10 @@ function openDetalhe(id){
           <span style="font-size:14px;color:var(--t1)">⚖️</span>
           <span style="font-size:8px;color:var(--t2);font-weight:600">Comparar</span>
         </button>
-        <button onclick="gerarQRCode(${d.id},'${d.nome.replace(/'/g,"\'")}','${d.responsavel||''}','${d.serial||''}','${d.otherserial||''}')" title="Gerar etiqueta QR Code" style="background:none;border:1px solid var(--b0);border-radius:8px;padding:4px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:36px">
+        <button onclick="gerarQRCodeDispositivo(${d.id})" title="Gerar etiqueta QR Code" style="background:none;border:1px solid var(--b0);border-radius:8px;padding:4px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:36px">
           <span style="font-size:14px;color:var(--t1)">🏷</span>
           <span style="font-size:8px;color:var(--t2);font-weight:600">Etiqueta</span>
         </button>
-        <a href="http://3.19.55.92/front/computer.form.php?id=${d.id}" target="_blank" style="background:none;border:1px solid var(--b0);border-radius:8px;padding:4px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:36px;text-decoration:none">
           <span style="font-size:14px;color:var(--t1)">🔗</span>
           <span style="font-size:8px;color:var(--t2);font-weight:600">GLPI</span>
         </a>
@@ -2697,27 +3181,10 @@ async function renovarTermo(pcId){
   const btn = event?.target;
   if(btn){ btn.disabled=true; btn.textContent='⏳ Gerando...'; }
   try{
-    const res = await fetch('/ti-tools/gerar-e-anexar-termo.php',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        secret: 'glpi_n8n_2026',
-        pc_id:  pcId,
-        nome:   d.responsavel,
-        email:  '',
-        gestor: '',
-        kit_teclado: false,
-        kit_mouse:   false,
-        assinatura:  ''
-      })
-    });
-    const data = await res.json();
-    if(data.ok){
-      await auditReg('termo','Termo renovado: '+d.nome,'Responsável: '+d.responsavel+' | ID: '+pcId);
-      toast('✓ Novo termo gerado e anexado!');
-      setTimeout(loadData, 1500);
-    } else {
-      toast('Erro ao gerar termo: '+(data.erro||''),'var(--red)');
-    }
+    // DEMO: simula geração de termo
+    await auditReg('termo','Termo gerado: '+d.nome,'Responsável: '+d.responsavel);
+    toast('✓ [DEMO] Termo gerado!');
+    abrirTermoDemo(pcId, d);
   }catch(e){
     toast('Erro de conexão','var(--red)');
   }
@@ -3411,7 +3878,7 @@ function exportarRelatorio(){
     </tr>`;
   }).join('');
 
-  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório Inventário — CFF Group — ${ds}</title>
+  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório Inventário — Nexus EF Business — ${ds}</title>
   <style>*{box-sizing:border-box;margin:0;padding:0}body{background:${bg};color:${tx};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:13px}@media print{.noprint{display:none!important}tr{page-break-inside:avoid}}</style>
   </head><body>
   <div class="noprint" style="position:fixed;top:12px;right:12px;z-index:999;display:flex;gap:8px">
@@ -3420,7 +3887,7 @@ function exportarRelatorio(){
   </div>
   <div style="background:${head};padding:28px 36px 24px;border-bottom:3px solid #4090F8">
     <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div><div style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">CFF Group · NowPro Technology · Departamento de TI</div>
+      <div><div style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Nexus EF Business · Departamento de TI</div>
         <div style="font-size:26px;font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:4px">Relatório de Inventário de TI</div>
         <div style="font-size:12px;color:rgba(255,255,255,.5)">Gerado em ${ds} às ${hs} por Erick Ferreira</div>
       </div>
@@ -3440,7 +3907,7 @@ function exportarRelatorio(){
     </table>
   </div>
   <div style="background:${card};border-top:1px solid ${border};padding:14px 36px;display:flex;justify-content:space-between">
-    <div style="font-size:11px;color:${muted}">CFF Group · NowPro Technology · Departamento de TI</div>
+    <div style="font-size:11px;color:${muted}">Nexus EF Business · Departamento de TI</div>
     <div style="font-size:11px;color:${muted}">Desenvolvido por Erick Ferreira · ${ds}</div>
   </div>
   </body></html>`;
@@ -3501,13 +3968,8 @@ async function enviarDM(pcId, event){
   dmStatus[pcId]='loading';
   renderPendentes();
   try{
-    const res=await fetch('http://3.19.55.92/ti-tools/dashboard-api.php?action=send_dm',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({username:d.responsavelUsername,nome:d.responsavel,
-        computer_id:d.id,computer_name:d.nome,computer_serial:d.serial,
-        computer_modelo:d.modelo,computer_localizacao:d.localizacao,
-        glpi_username:d.responsavelUsername,slack_user_id:''})
-    });
+    const res = {ok:true}; toast('[DEMO] DM enviada via Slack!'); if(false){
+    }
     const data=await res.json();
     dmStatus[pcId]=data.ok?'sent':'error';
     if(data.ok) toast('DM enviada para '+d.responsavel+'!');
@@ -3525,13 +3987,8 @@ async function enviarDMtodos(){
   for(const d of pendentes){
     dmStatus[d.id]='loading';
     try{
-      const res=await fetch('http://3.19.55.92/ti-tools/dashboard-api.php?action=send_dm',{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({username:d.responsavelUsername,nome:d.responsavel,
-          computer_id:d.id,computer_name:d.nome,computer_serial:d.serial,
-          computer_modelo:d.modelo,computer_localizacao:d.localizacao,
-          glpi_username:d.responsavelUsername,slack_user_id:''})
-      });
+    const res = {ok:true}; toast('[DEMO] DM enviada via Slack!'); if(false){
+    }
       const data=await res.json();
       dmStatus[d.id]=data.ok?'sent':'error';
       if(data.ok) ok++; else fail++;
@@ -3630,131 +4087,13 @@ async function salvarTermoSemVinculo(){
   const assina=(document.getElementById('drw-nome-assina').value||'').trim();
   if(!nome||!gestor||!kit){ toast('Preencha nome, gestor e kit teclado/mouse','var(--amber)'); return; }
   if(!confirma||assina.length<3){ toast('Confirme a leitura e assine com seu nome completo','var(--amber)'); return; }
-
-  const btn=document.getElementById('drw-btn-salvar');
-  btn.disabled=true; btn.textContent='⏳ Gerando PDF e anexando...';
-
-  try{
-    const res=await fetch('http://3.19.55.92/ti-tools/gerar-e-anexar-termo.php',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        secret:'glpi_n8n_2026',
-        dados:{
-          nome,email:document.getElementById('drw-email').value,
-          telefone:document.getElementById('drw-telefone').value,
-          gestor,tipo_computador:document.getElementById('drw-tipo-comp').value,
-          marca_equipamento:document.getElementById('drw-marca').value||'Apple Inc.',
-          tipo_equipamento:document.getElementById('drw-tipo-equip').value,
-          kit_teclado_mouse:kit,observacao_kit:document.getElementById('drw-obs-kit').value,
-          marca_celular:document.getElementById('drw-marca-cel').value,
-          modelo_celular:document.getElementById('drw-modelo-cel').value,
-          nome_assinatura:assina,
-          equipamento:drawerPc.nome,serial:drawerPc.serial,
-          modelo:drawerPc.modelo||'',localizacao:drawerPc.localizacao||'',
-          computer_id:drawerPc.id,
-          slack_user_id:'DASHBOARD_SEM_VINCULO',
-        }
-      })
-    });
-    const data=await res.json();
-    if(data.sucesso||data.ok){
-      toast('✓ Termo gerado e anexado no GLPI!');
-      await auditReg('termo','Termo gerado: '+drawerPc.nome,'Colaborador: '+document.getElementById('drw-nome').value);
-      closeDrawer();
-      setTimeout(loadData,1500);
-    } else {
-      toast('Erro: '+(data.erro||data.error||'Falha ao gerar termo'),'var(--red)');
-      btn.disabled=false; btn.textContent='✍ Assinar e Gerar Termo';
-    }
-  }catch(e){
-    toast('Erro de conexão','var(--red)');
-    btn.disabled=false; btn.textContent='✍ Assinar e Gerar Termo';
-  }
+  // DEMO: simula geração de termo
+  auditReg('termo','Termo gerado via reinventário: '+drawerPc.nome,'Responsável: '+nome);
+  toast('✓ [DEMO] Termo gerado e assinado!');
+  closeDrawer();
+  setTimeout(loadData,1000);
 }
 
-// ── CADASTRO ──────────────────────────────────────────────────────────────────
-const CAD_API = 'http://3.19.55.92/ti-tools/cadastro-api.php';
-let cadCat = null;
-let cadLoteCounters = {computador:0,celular:0,fone:0};
-let cadRecentes = [];
-
-function cadSelecionarCat(cat){
-  cadCat=cat;
-  document.querySelectorAll('.cat-card-inline').forEach(c=>c.classList.remove('active'));
-  document.querySelectorAll('.cad-form').forEach(f=>f.classList.remove('active'));
-  document.getElementById('cad-cat-'+cat).classList.add('active');
-  document.getElementById('cad-form-'+cat).classList.add('active');
-  cadPreview();
-}
-
-function cadPreview(){
-  if(!cadCat) return;
-  let items=[];
-  if(cadCat==='computador'){
-    items=[
-      {l:'Nome',v:document.getElementById('cad-c-nome').value||'—'},
-      {l:'Serial',v:document.getElementById('cad-c-serial').value||'—',m:true},
-      {l:'Patrimônio',v:document.getElementById('cad-c-pat').value||'—',m:true},
-      {l:'Modelo',v:document.getElementById('cad-c-modelo').value||'—',m:true},
-      {l:'Fabricante',v:document.getElementById('cad-c-fab').value||'Apple Inc.'},
-      {l:'Status',v:'Em Estoque'},
-    ];
-  } else if(cadCat==='celular'){
-    items=[
-      {l:'Nome',v:document.getElementById('cad-cel-nome').value||'—'},
-      {l:'IMEI/Serial',v:document.getElementById('cad-cel-serial').value||'—',m:true},
-      {l:'Marca',v:document.getElementById('cad-cel-marca').value},
-      {l:'Modelo',v:document.getElementById('cad-cel-modelo').value||'—'},
-      {l:'Storage',v:document.getElementById('cad-cel-storage').value||'—'},
-      {l:'Seção GLPI',v:'Telefones'},
-    ];
-  } else {
-    items=[
-      {l:'Nome',v:document.getElementById('cad-fone-nome').value||'—'},
-      {l:'Serial',v:document.getElementById('cad-fone-serial').value||'—',m:true},
-      {l:'Marca',v:document.getElementById('cad-fone-marca').value},
-      {l:'Modelo',v:document.getElementById('cad-fone-modelo').value||'—'},
-      {l:'Tipo',v:document.getElementById('cad-fone-tipo').value},
-      {l:'Seção GLPI',v:'Periféricos'},
-    ];
-  }
-  document.getElementById('cad-pv-'+cadCat).innerHTML=items.map(i=>`
-    <div class="cpv-item"><div class="cpv-lbl">${i.l}</div><div class="cpv-val${i.m?' mono':''}">${i.v}</div></div>`).join('');
-}
-
-function cadAdicionarLote(cat){
-  cadLoteCounters[cat]++;
-  const n=cadLoteCounters[cat];
-  const div=document.createElement('div');
-  div.className='lote-row'; div.id='cad-lote-'+cat+'-'+n;
-  let inp='';
-  if(cat==='computador') inp=`<input class="cad-input" placeholder="Nome *" id="cl-c-nome-${n}" style="flex:2"><input class="cad-input" placeholder="Serial *" id="cl-c-ser-${n}" style="flex:1" oninput="this.value=this.value.toUpperCase()"><input class="cad-input" placeholder="Patrimônio" id="cl-c-pat-${n}" style="flex:1"><input class="cad-input" placeholder="Modelo" id="cl-c-mod-${n}" style="flex:1">`;
-  else if(cat==='celular') inp=`<input class="cad-input" placeholder="Nome *" id="cl-cel-nome-${n}" style="flex:2"><input class="cad-input" placeholder="IMEI *" id="cl-cel-ser-${n}" style="flex:1" oninput="this.value=this.value.toUpperCase()"><input class="cad-input" placeholder="Modelo" id="cl-cel-mod-${n}" style="flex:1">`;
-  else inp=`<input class="cad-input" placeholder="Nome *" id="cl-fone-nome-${n}" style="flex:2"><input class="cad-input" placeholder="Serial" id="cl-fone-ser-${n}" style="flex:1" oninput="this.value=this.value.toUpperCase()"><input class="cad-input" placeholder="Modelo" id="cl-fone-mod-${n}" style="flex:1">`;
-  div.innerHTML=`<div class="lote-num-badge">${n+1}</div><div style="flex:1;display:flex;gap:6px">${inp}</div><button class="btn-rm-lote" onclick="document.getElementById('cad-lote-${cat}-${n}').remove()">✕</button>`;
-  document.getElementById('cad-lote-'+cat).appendChild(div);
-}
-
-function cadColetarLote(cat){
-  const items=[];
-  const n=cadLoteCounters[cat];
-  for(let i=1;i<=n;i++){
-    if(!document.getElementById('cad-lote-'+cat+'-'+i)) continue;
-    if(cat==='computador'){
-      const nome=document.getElementById('cl-c-nome-'+i)?.value?.trim();
-      const serial=document.getElementById('cl-c-ser-'+i)?.value?.trim();
-      if(nome&&serial) items.push({nome,serial,patrimonio:document.getElementById('cl-c-pat-'+i)?.value?.trim()||'',modelo:document.getElementById('cl-c-mod-'+i)?.value?.trim()||'',fabricante:document.getElementById('cad-c-fab').value,localizacao:document.getElementById('cad-c-loc').value,obs:''});
-    } else if(cat==='celular'){
-      const nome=document.getElementById('cl-cel-nome-'+i)?.value?.trim();
-      const serial=document.getElementById('cl-cel-ser-'+i)?.value?.trim();
-      if(nome&&serial) items.push({nome,serial,modelo:document.getElementById('cl-cel-mod-'+i)?.value?.trim()||'',marca:document.getElementById('cad-cel-marca').value,localizacao:document.getElementById('cad-cel-loc').value});
-    } else {
-      const nome=document.getElementById('cl-fone-nome-'+i)?.value?.trim();
-      if(nome) items.push({nome,serial:document.getElementById('cl-fone-ser-'+i)?.value?.trim()||'',modelo:document.getElementById('cl-fone-mod-'+i)?.value?.trim()||'',marca:document.getElementById('cad-fone-marca').value,tipo:document.getElementById('cad-fone-tipo').value,conexao:document.getElementById('cad-fone-con').value,localizacao:document.getElementById('cad-fone-loc').value});
-    }
-  }
-  return items;
-}
 
 async function cadSalvar(cat){
   let principal={};
@@ -4137,11 +4476,13 @@ function openDetalheDispositivo(tipo, id){
   const isFav = favoritos.includes(d.id);
   document.getElementById('md-foot').innerHTML=`
     <div style="display:flex;gap:4px;margin-right:auto">
-      <a href="http://3.19.55.92/front/${glpiPath}.form.php?id=${d.id}" target="_blank" style="background:none;border:1px solid var(--b0);border-radius:8px;padding:4px 9px;display:flex;flex-direction:column;align-items:center;gap:1px;text-decoration:none;min-width:36px">
-        <span style="font-size:14px;color:var(--t1)">🔗</span><span style="font-size:8px;color:var(--t2);font-weight:600">GLPI</span>
-      </a>
-      <button onclick="toggleFavorito(${d.id})" style="background:none;border:1px solid var(--b0);border-radius:8px;padding:4px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:36px">
-        <span style="font-size:14px;color:var(--amber)">${isFav?'★':'☆'}</span><span style="font-size:8px;color:var(--t2);font-weight:600">Favorito</span>
+      <button id="fav-btn-${d.id}" onclick="toggleFavorito(${d.id})" style="background:${isFav?'var(--amber2)':'none'};border:1px solid ${isFav?'var(--amber)':'var(--b0)'};border-radius:8px;padding:4px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:36px;transition:all .15s">
+        <span style="font-size:14px;color:${isFav?'#F5A623':'var(--t2)'}">${isFav?'★':'☆'}</span>
+        <span style="font-size:8px;color:var(--t2);font-weight:600">Favorito</span>
+      </button>
+      <button onclick="gerarQRCodeDispositivo(${d.id})" style="background:none;border:1px solid var(--b0);border-radius:8px;padding:4px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:36px">
+        <span style="font-size:14px;color:var(--t1)">🏷</span>
+        <span style="font-size:8px;color:var(--t2);font-weight:600">Etiqueta</span>
       </button>
     </div>
     ${tipo==='cel'?`<button class="btn btn-ghost" onclick="abrirModalChip(${d.id},'${d.nome.replace(/'/g,"\'")}') " style="font-size:12px">📶 Chip/Linha</button>`:''}
@@ -4780,38 +5121,50 @@ document.addEventListener('click', e=>{
 let qrInstance = null;
 let qrEquipData = {};
 
+function gerarQRCodeDispositivo(id){
+  // Busca em todos os tipos
+  const d = allData.find(x=>x.id===id)
+         || allCelulares.find(x=>x.id===id)
+         || allPerifericos.find(x=>x.id===id) || {};
+  gerarQRCode(d.id, d.nome||'', d.responsavel||'', d.serial||'', d.otherserial||'');
+}
+
 function gerarQRCode(id, nome, responsavel, serial, patrimonio){
   qrEquipData = {id, nome, responsavel, serial, patrimonio};
-  const url = 'http://3.19.55.92/ti-tools/qr.html?id='+id;
-
-  // Limpa QR anterior
-  const container = document.getElementById('qr-container');
-  container.innerHTML = '';
-  if(qrInstance){ try{ qrInstance.clear(); }catch(e){} }
-
-  // Gera novo QR
-  qrInstance = new QRCode(container, {
-    text: url,
-    width: 180,
-    height: 180,
-    colorDark: '#000000',
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.H
-  });
+  const url = window.location.origin+window.location.pathname+'?equip='+id;
 
   document.getElementById('qr-equip-nome').textContent = nome;
   document.getElementById('qr-equip-serial').textContent = serial||'—';
   document.getElementById('qr-equip-resp').textContent = responsavel ? '👤 '+responsavel : 'Sem responsável';
 
+  const container = document.getElementById('qr-container');
+  container.innerHTML = '';
+
+  try{
+    if(typeof QRCode !== 'undefined'){
+      new QRCode(container, {
+        text: url, width:180, height:180,
+        colorDark:'#000000', colorLight:'#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    } else {
+      // Fallback: mostra URL como texto se QRCode não carregar
+      container.innerHTML = '<div style="width:180px;height:180px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:10px;text-align:center;padding:10px;word-break:break-all;color:#333">QR Code<br>(demo)</div>';
+    }
+  }catch(e){
+    container.innerHTML = '<div style="width:180px;height:180px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:10px;text-align:center;padding:10px;color:#666">QR Code<br>'+url+'</div>';
+  }
+
   openModal('modal-qrcode');
 }
+
 
 function imprimirQR(){
   const nome      = qrEquipData.nome||'';
   const serial    = qrEquipData.serial||'';
   const resp      = qrEquipData.responsavel||'';
   const id        = qrEquipData.id||'';
-  const url       = 'http://3.19.55.92/ti-tools/qr.html?id='+id;
+  const url       = window.location.origin+window.location.pathname+'?equip='+id;
 
   // Pega o canvas/img do QR gerado
   const qrImg = document.querySelector('#qr-container img, #qr-container canvas');
@@ -4847,7 +5200,7 @@ function imprimirQR(){
     + '<div class="etiqueta">'
     + '<div class="qr-wrap">'+qrImgTag+'</div>'
     + '<div class="info">'
-    + '<div class="logo">CFF Group</div>'
+    + '<div class="logo">Nexus EF Business</div>'
     + '<div class="divider"></div>'
     + '<div class="equip-nome">'+nome+'</div>'
     + serialTag
@@ -5225,7 +5578,7 @@ function abrirDashExecutivo(){
       ${tiposHtml}
     </div>
     <div style="text-align:center;font-size:10px;color:var(--t2);padding-top:8px">
-      Relatório gerado em ${new Date().toLocaleString('pt-BR')} · CFF Group · NowPro Technology
+      Relatório gerado em ${new Date().toLocaleString('pt-BR')} · Nexus EF Business
     </div>`;
 
   openModal('modal-executivo');
@@ -5273,21 +5626,30 @@ function atualizarBadgeFavoritos(){
 function renderFavoritos(){
   const el = document.getElementById('fav-lista');
   if(!el) return;
-  const favData = allData.filter(d=>favoritos.includes(d.id));
+  // Inclui computadores, celulares e periféricos nos favoritos
+  const todos = [...allData, ...allCelulares, ...allPerifericos];
+  const favData = todos.filter(d=>favoritos.includes(d.id));
   atualizarBadgeFavoritos();
   if(!favData.length){
     el.innerHTML='<div style="text-align:center;padding:40px;color:var(--t2);font-size:12px">Nenhum equipamento favoritado.<br><span style="font-size:11px">Clique em ☆ no modal de detalhes para favoritar.</span></div>';
     return;
   }
-  el.innerHTML = favData.map(d=>`
-    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--b0);cursor:pointer" onclick="openDetalhe(${d.id})">
-      <span style="font-size:18px">${tipoIcon(d.tipo)}</span>
+  el.innerHTML = favData.map(d=>{
+    const isCel = !!allCelulares.find(x=>x.id===d.id);
+    const isPer = !!allPerifericos.find(x=>x.id===d.id);
+    const onclick = isCel ? `openDetalheDispositivo('cel',${d.id})`
+                  : isPer ? `openDetalheDispositivo('per',${d.id})`
+                  : `openDetalhe(${d.id})`;
+    const loc = (d.localizacao||'').replace('Nexus EF Business > ','').replace('Cff Group > ','');
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--b0);cursor:pointer" onclick="${onclick}">
+      <span style="font-size:18px">${tipoIcon(d.tipo||d.fabricante||'')}</span>
       <div style="flex:1">
         <div style="font-size:13px;font-weight:600">${d.nome}</div>
-        <div style="font-size:11px;color:var(--t2)">${d.responsavel||'Sem responsável'} · ${(d.localizacao||'').replace('Cff Group > ','')}</div>
+        <div style="font-size:11px;color:var(--t2)">${d.responsavel||'Sem responsável'} · ${loc}</div>
       </div>
       <button onclick="event.stopPropagation();toggleFavorito(${d.id})" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--amber)">★</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ── COLABORADORES ─────────────────────────────────────────────────────────────
@@ -5399,54 +5761,131 @@ function abrirModalColab(nome){
 function abrirTermoDemo(pcId, equipObj){
   const d = equipObj || allData.find(x=>x.id===pcId) || [...allCelulares,...allPerifericos].find(x=>x.id===pcId) || {};
   const hoje = new Date().toLocaleDateString('pt-BR');
-  const html = `
-    <div style="max-width:600px;margin:0 auto;font-family:Arial,sans-serif;font-size:12px;color:#000;line-height:1.6">
-      <div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #000">
-        <div style="font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.1em">CFF Group</div>
-        <div style="font-size:13px;font-weight:600;margin-top:4px">Termo de Responsabilidade de Equipamento de TI</div>
-      </div>
-      <p>Pelo presente instrumento, eu, <strong>${d.responsavel||'—'}</strong>, declaro ter recebido em perfeitas condições o equipamento abaixo discriminado, comprometendo-me a zelar pela sua conservação e uso adequado.</p>
-      <table style="width:100%;border-collapse:collapse;margin:16px 0">
-        <tr style="background:#f5f5f5"><th style="padding:8px;border:1px solid #ccc;text-align:left">Campo</th><th style="padding:8px;border:1px solid #ccc;text-align:left">Informação</th></tr>
-        <tr><td style="padding:8px;border:1px solid #ccc">Equipamento</td><td style="padding:8px;border:1px solid #ccc"><strong>${d.nome||'—'}</strong></td></tr>
-        <tr style="background:#f5f5f5"><td style="padding:8px;border:1px solid #ccc">Número de Série</td><td style="padding:8px;border:1px solid #ccc;font-family:monospace">${d.serial||'—'}</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ccc">Patrimônio</td><td style="padding:8px;border:1px solid #ccc">${d.otherserial||'—'}</td></tr>
-        <tr style="background:#f5f5f5"><td style="padding:8px;border:1px solid #ccc">Localização</td><td style="padding:8px;border:1px solid #ccc">${(d.localizacao||'').replace('Cff Group > ','')}</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ccc">Data de entrega</td><td style="padding:8px;border:1px solid #ccc">${hoje}</td></tr>
-        <tr style="background:#f5f5f5"><td style="padding:8px;border:1px solid #ccc">Responsável</td><td style="padding:8px;border:1px solid #ccc"><strong>${d.responsavel||'—'}</strong></td></tr>
-      </table>
-      <p style="margin-top:16px">O colaborador se compromete a:</p>
-      <ul style="margin:8px 0 16px 20px">
-        <li>Usar o equipamento exclusivamente para fins profissionais</li>
-        <li>Comunicar imediatamente ao setor de TI qualquer dano, perda ou roubo</li>
-        <li>Devolver o equipamento ao ser solicitado ou ao encerrar o vínculo com a empresa</li>
-        <li>Não instalar softwares não autorizados pelo setor de TI</li>
-      </ul>
-      <div style="margin-top:32px;display:flex;justify-content:space-between;gap:24px">
-        <div style="flex:1;text-align:center">
-          <div style="border-top:1px solid #000;padding-top:6px;margin-top:40px">${d.responsavel||'Colaborador'}</div>
-          <div style="font-size:10px;color:#666">Colaborador</div>
-        </div>
-        <div style="flex:1;text-align:center">
-          <div style="border-top:1px solid #000;padding-top:6px;margin-top:40px">Setor de TI</div>
-          <div style="font-size:10px;color:#666">CFF Group — NowPro Technology</div>
-        </div>
-      </div>
-      <div style="margin-top:24px;padding:8px;background:#f5f5f5;border-radius:4px;font-size:10px;color:#666;text-align:center">
-        Documento gerado em ${hoje} · Plataforma de Gestão de TI · CFF Group
-      </div>
-    </div>`;
 
-  // Abre em janela de impressão
-  const w = window.open('','_blank','width=700,height:900');
-  const sc = 'script';
-  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Termo de Responsabilidade</title>'
-    +'<style>body{margin:40px;font-family:Arial,sans-serif}@media print{body{margin:20px}@page{margin:15mm}}</style>'
-    +'</head><body>'+html
-    +'<'+sc+'>window.onload=function(){window.print();}</'+sc+'>'
-    +'</body></html>');
-  w.document.close();
+  const html = `<div style="max-width:560px;margin:0 auto;font-family:Arial,sans-serif;font-size:12px;color:#000;line-height:1.6">
+    <div style="text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #000">
+      <div style="font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.08em">Nexus EF Business</div>
+      <div style="font-size:12px;font-weight:600;margin-top:4px">Termo de Responsabilidade de Equipamento de TI</div>
+    </div>
+    <p style="margin-bottom:14px">Pelo presente instrumento, eu, <strong>${d.responsavel||'—'}</strong>, declaro ter recebido em perfeitas condições o equipamento abaixo discriminado, comprometendo-me a zelar pela sua conservação e uso adequado.</p>
+    <table style="width:100%;border-collapse:collapse;margin:14px 0">
+      <tr style="background:#f5f5f5"><th style="padding:7px 10px;border:1px solid #ccc;text-align:left;font-size:11px">Campo</th><th style="padding:7px 10px;border:1px solid #ccc;text-align:left;font-size:11px">Informação</th></tr>
+      <tr><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">Equipamento</td><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px"><strong>${d.nome||'—'}</strong></td></tr>
+      <tr style="background:#f5f5f5"><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">Número de Série</td><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px;font-family:monospace">${d.serial||'—'}</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">Patrimônio</td><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">${d.otherserial||'—'}</td></tr>
+      <tr style="background:#f5f5f5"><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">Localização</td><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">${(d.localizacao||'').replace('Cff Group > ','')}</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">Data de entrega</td><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">${hoje}</td></tr>
+      <tr style="background:#f5f5f5"><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">Responsável</td><td style="padding:7px 10px;border:1px solid #ccc;font-size:11px"><strong>${d.responsavel||'—'}</strong></td></tr>
+    </table>
+    <p style="font-size:11px;margin-bottom:8px">O colaborador se compromete a:</p>
+    <ul style="font-size:11px;margin:0 0 16px 18px">
+      <li>Usar o equipamento exclusivamente para fins profissionais</li>
+      <li>Comunicar imediatamente ao setor de TI qualquer dano, perda ou roubo</li>
+      <li>Devolver o equipamento quando solicitado ou ao encerrar o vínculo com a empresa</li>
+      <li>Não instalar softwares não autorizados pelo setor de TI</li>
+    </ul>
+    <div style="display:flex;justify-content:space-between;gap:24px;margin-top:28px">
+      <div style="flex:1;text-align:center">
+        <div style="border-top:1px solid #000;padding-top:6px;margin-top:40px;font-size:11px">${d.responsavel||'Colaborador'}</div>
+        <div style="font-size:10px;color:#666">Colaborador</div>
+      </div>
+      <div style="flex:1;text-align:center">
+        <div style="border-top:1px solid #000;padding-top:6px;margin-top:40px;font-size:11px">Setor de TI</div>
+        <div style="font-size:10px;color:#666">Nexus EF Business</div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:8px;background:#f5f5f5;border-radius:4px;font-size:10px;color:#666;text-align:center">
+      Documento gerado em ${hoje} · Plataforma de Gestão de TI · Nexus EF Business
+    </div>
+  </div>`;
+
+  // Abre em modal interno (sem auto-print)
+  let modalTermo = document.getElementById('modal-termo-demo');
+  if(!modalTermo){
+    modalTermo = document.createElement('div');
+    modalTermo.id = 'modal-termo-demo';
+    modalTermo.className = 'overlay';
+    modalTermo.onclick = function(e){ if(e.target===this) this.classList.remove('open'); };
+    const closeTermoFn = 'document.getElementById(String.fromCharCode(109,111,100,97,108,45,116,101,114,109,111,45,100,101,109,111)).classList.remove(String.fromCharCode(111,112,101,110))';
+    modalTermo.innerHTML = '<div class="modal modal-md" style="max-height:85vh;overflow-y:auto">'
+      +'<div class="modal-hdr"><div class="modal-title">📄 Termo de Responsabilidade</div>'
+      +'<button class="modal-close" onclick="fecharTermoDemo()">✕</button></div>'
+      +'<div class="modal-body" id="termo-demo-body" style="padding:24px"></div>'
+      +'<div class="modal-foot">'
+      +'<button class="btn btn-ghost" onclick="fecharTermoDemo()">Fechar</button>'
+      +'<button class="btn btn-primary" onclick="window.print()">🖨 Imprimir</button>'
+      +'</div></div>';
+    document.body.appendChild(modalTermo);
+  }
+  document.getElementById('termo-demo-body').innerHTML = html;
+  modalTermo.classList.add('open');
 }
+
+function fecharTermoDemo(){
+  const m = document.getElementById('modal-termo-demo');
+  if(m) m.classList.remove('open');
+}
+
+
+function cadSelecionarCat(cat){
+  cadCat=cat;
+  document.querySelectorAll('.cat-card-inline').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.cad-form').forEach(f=>f.classList.remove('active'));
+  document.getElementById('cad-cat-'+cat).classList.add('active');
+  document.getElementById('cad-form-'+cat).classList.add('active');
+  cadPreview();
+}
+
+function cadAdicionarLote(cat){
+  cadLoteCounters[cat]++;
+  const n=cadLoteCounters[cat];
+  const div=document.createElement('div');
+  div.className='lote-row'; div.id='cad-lote-'+cat+'-'+n;
+  let inp='';
+  if(cat==='computador') inp=`<input class="cad-input" placeholder="Nome *" id="cl-c-nome-${n}" style="flex:2"><input class="cad-input" placeholder="Serial *" id="cl-c-ser-${n}" style="flex:1" oninput="this.value=this.value.toUpperCase()"><input class="cad-input" placeholder="Patrimônio" id="cl-c-pat-${n}" style="flex:1"><input class="cad-input" placeholder="Modelo" id="cl-c-mod-${n}" style="flex:1">`;
+  else if(cat==='celular') inp=`<input class="cad-input" placeholder="Nome *" id="cl-cel-nome-${n}" style="flex:2"><input class="cad-input" placeholder="IMEI *" id="cl-cel-ser-${n}" style="flex:1" oninput="this.value=this.value.toUpperCase()"><input class="cad-input" placeholder="Modelo" id="cl-cel-mod-${n}" style="flex:1">`;
+  else inp=`<input class="cad-input" placeholder="Nome *" id="cl-fone-nome-${n}" style="flex:2"><input class="cad-input" placeholder="Serial" id="cl-fone-ser-${n}" style="flex:1" oninput="this.value=this.value.toUpperCase()"><input class="cad-input" placeholder="Modelo" id="cl-fone-mod-${n}" style="flex:1">`;
+  div.innerHTML=`<div class="lote-num-badge">${n+1}</div><div style="flex:1;display:flex;gap:6px">${inp}</div><button class="btn-rm-lote" onclick="document.getElementById('cad-lote-${cat}-${n}').remove()">✕</button>`;
+  document.getElementById('cad-lote-'+cat).appendChild(div);
+}
+
+function cadPreview(){
+  if(!cadCat) return;
+  let items=[];
+  if(cadCat==='computador'){
+    items=[
+      {l:'Nome',v:document.getElementById('cad-c-nome').value||'—'},
+      {l:'Serial',v:document.getElementById('cad-c-serial').value||'—',m:true},
+      {l:'Patrimônio',v:document.getElementById('cad-c-pat').value||'—',m:true},
+      {l:'Modelo',v:document.getElementById('cad-c-modelo').value||'—',m:true},
+      {l:'Fabricante',v:document.getElementById('cad-c-fab').value||'Apple Inc.'},
+      {l:'Status',v:'Em Estoque'},
+    ];
+  } else if(cadCat==='celular'){
+    items=[
+      {l:'Nome',v:document.getElementById('cad-cel-nome').value||'—'},
+      {l:'IMEI/Serial',v:document.getElementById('cad-cel-serial').value||'—',m:true},
+      {l:'Marca',v:document.getElementById('cad-cel-marca').value},
+      {l:'Modelo',v:document.getElementById('cad-cel-modelo').value||'—'},
+      {l:'Storage',v:document.getElementById('cad-cel-storage').value||'—'},
+      {l:'Seção GLPI',v:'Telefones'},
+    ];
+  } else {
+    items=[
+      {l:'Nome',v:document.getElementById('cad-fone-nome').value||'—'},
+      {l:'Serial',v:document.getElementById('cad-fone-serial').value||'—',m:true},
+      {l:'Marca',v:document.getElementById('cad-fone-marca').value},
+      {l:'Modelo',v:document.getElementById('cad-fone-modelo').value||'—'},
+      {l:'Tipo',v:document.getElementById('cad-fone-tipo').value},
+      {l:'Seção GLPI',v:'Periféricos'},
+    ];
+  }
+  document.getElementById('cad-pv-'+cadCat).innerHTML=items.map(i=>`
+    <div class="cpv-item"><div class="cpv-lbl">${i.l}</div><div class="cpv-val${i.m?' mono':''}">${i.v}</div></div>`).join('');
+}
+
+// Alias para compatibilidade
+function filtrarColaboradores(){ renderColaboradores(); }
 
 registrarAcesso();
 loadData();
